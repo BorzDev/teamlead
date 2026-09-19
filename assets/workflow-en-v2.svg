@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="418" viewBox="0 0 1040 418" role="img" aria-labelledby="title desc" xml:lang="en">
+  <title id="title">From a task to reviewed changes</title>
+  <desc id="desc">The lead plans. Subagents build. Fresh reviewers check and fix. Fixes made? Start a fresh review. Failed checks return to review too. Up to 6 review rounds; open issues are reported.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop stop-color="#101e29"/><stop offset="1" stop-color="#0b131c"/></linearGradient>
+    <marker id="arrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0l4 2.5L0 5" fill="none" stroke="#637988"/></marker>
+    <marker id="loop-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0l5 3L0 6" fill="none" stroke="#c5a3ff"/></marker>
+  </defs>
+  <rect x=".5" y=".5" width="1039" height="417" rx="22" fill="url(#background)" stroke="#293946"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif">
+    <text x="32" y="35" font-size="12" font-weight="700" letter-spacing="2" fill="#53f7c9">TEAMLEAD / HOW IT WORKS</text>
+    <text x="32" y="72" font-size="29" font-weight="700" fill="#f1f6fa">From a task to reviewed changes</text>
+    <text x="32" y="101" font-size="17" fill="#9eb3c2">The lead plans. Subagents build. Fresh reviewers check and fix.</text>
+    <g>
+      <rect x="32" y="132" width="180" height="148" rx="14" fill="#14212c" stroke="#293946"/>
+      <rect x="48" y="149" width="32" height="25" rx="7" fill="#53f7c9" fill-opacity=".12"/>
+      <text x="64" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#53f7c9">01</text>
+      <text x="48" y="207" font-size="21" font-weight="700" fill="#f1f6fa">Discover</text>
+      <text x="48" y="238" font-size="16" fill="#b8c8d3">Map code, tests</text>
+      <text x="48" y="260" font-size="16" fill="#b8c8d3">and risks</text>
+      <path d="M213 208h15" stroke="#637988" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </g>
+<g>
+      <rect x="231" y="132" width="180" height="148" rx="14" fill="#14212c" stroke="#293946"/>
+      <rect x="247" y="149" width="32" height="25" rx="7" fill="#70deeb" fill-opacity=".12"/>
+      <text x="263" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#70deeb">02</text>
+      <text x="247" y="207" font-size="21" font-weight="700" fill="#f1f6fa">Plan</text>
+      <text x="247" y="238" font-size="16" fill="#b8c8d3">Define scope</text>
+      <text x="247" y="260" font-size="16" fill="#b8c8d3">and checks</text>
+      <path d="M412 208h15" stroke="#637988" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </g>
+<g>
+      <rect x="430" y="132" width="180" height="148" rx="14" fill="#14212c" stroke="#293946"/>
+      <rect x="446" y="149" width="32" height="25" rx="7" fill="#94b7ff" fill-opacity=".12"/>
+      <text x="462" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#94b7ff">03</text>
+      <text x="446" y="207" font-size="21" font-weight="700" fill="#f1f6fa">Build</text>
+      <text x="446" y="238" font-size="16" fill="#b8c8d3">Assign focused</text>
+      <text x="446" y="260" font-size="16" fill="#b8c8d3">work to agents</text>
+      <path d="M611 208h15" stroke="#637988" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </g>
+<g>
+      <rect x="629" y="132" width="180" height="148" rx="14" fill="#14212c" stroke="#293946"/>
+      <rect x="645" y="149" width="32" height="25" rx="7" fill="#c5a3ff" fill-opacity=".12"/>
+      <text x="661" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#c5a3ff">04</text>
+      <text x="645" y="207" font-size="21" font-weight="700" fill="#f1f6fa">Review</text>
+      <text x="645" y="238" font-size="16" fill="#b8c8d3">Fresh eyes.</text>
+      <text x="645" y="260" font-size="16" fill="#b8c8d3">Fix real defects.</text>
+      <path d="M810 208h15" stroke="#637988" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </g>
+<g>
+      <rect x="828" y="132" width="180" height="148" rx="14" fill="#14212c" stroke="#293946"/>
+      <rect x="844" y="149" width="32" height="25" rx="7" fill="#f5d68b" fill-opacity=".12"/>
+      <text x="860" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#f5d68b">05</text>
+      <text x="844" y="207" font-size="21" font-weight="700" fill="#f1f6fa">Verify</text>
+      <text x="844" y="238" font-size="16" fill="#b8c8d3">Run required</text>
+      <text x="844" y="260" font-size="16" fill="#b8c8d3">project checks</text>
+
+    </g>
+    <path d="M918 283v10q0 10-10 10H729q-10 0-10-10v-8" stroke="#c5a3ff" stroke-opacity=".7" stroke-width="1.5" stroke-dasharray="4 4" fill="none" marker-end="url(#loop-arrow)"/>
+    <rect x="32" y="320" width="976" height="72" rx="12" fill="#1c2034" stroke="#38374f"/>
+    <g transform="translate(52 344)" fill="none" stroke="#c5a3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+      <path d="M21 3v5h-5"/>
+      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+      <path d="M8 16H3v5"/>
+    </g>
+    <text x="90" y="347" font-size="18" font-weight="600" fill="#e0d4f9">Fixes made? Start a fresh review.</text>
+    <text x="90" y="374" font-size="16" fill="#b8b6cc">Failed checks return to review too. Up to 6 review rounds; open issues are reported.</text>
+  </g>
+</svg>

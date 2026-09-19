@@ -1,0 +1,6 @@
+interface:
+  display_name: "Teamlead"
+  short_description: "Планирование, делегирование и независимое ревью"
+  default_prompt: "Используй $teamlead для выполнения задачи с планом, делегированием и независимым ревью."
+policy:
+  allow_implicit_invocation: false
