@@ -5,7 +5,7 @@
 <h1 align="center">teamlead</h1>
 
 <p align="center">
-  <strong>Plan. Delegate. Review independently.</strong><br>
+  <strong>Delegate. Review by risk. Keep the context.</strong><br>
   One skill for Codex and Claude Code.
 </p>
 
@@ -29,7 +29,7 @@
 
 ---
 
-Give Teamlead a task. The lead studies the codebase, makes a plan, and assigns scoped work to subagents. Fresh reviewers check and fix the changes; the lead closes with the project's required checks and a report of what actually passed.
+Give Teamlead a task. It delegates scoped work, uses independent review when the risk calls for it, and reports what actually passed. Version **1.1.0** brings the same persistent workflow to Codex and Claude Code with updated model routing.
 
 ## Install
 
@@ -71,87 +71,82 @@ Symlink mode shares one skill copy between applications. The application list co
 ## How it works
 
 <p align="center">
-  <img src="assets/workflow-en-v2.svg" width="1040" alt="Discover the codebase, plan scoped tasks, build with subagents, review and fix with fresh reviewers, then run project checks. Fixes need another review; failed checks return to review. The review cycle has a six-round limit.">
+  <img src="assets/workflow-en-v2.svg" width="1040" alt="Discover and plan when needed, implement, review independently, and verify. Workers fix findings; the same reviewer checks the delta. At most two review rounds per delta.">
 </p>
 
-| Stage | What happens |
+| Work | What happens |
 | --- | --- |
-| **01 · Discover** | A scout maps the relevant code, tests, and risks. The lead reads the findings and saves the starting Git state. |
-| **02 · Plan** | The lead defines the goal, file ownership, interfaces, and checks for each task. Planning mode stops here. |
-| **03 · Build** | Subagents implement assigned tasks and run focused checks. Work runs in parallel only when its files and resources do not overlap. |
-| **04 · Review & fix** | A fresh reviewer inspects the changes and fixes real defects. Every round that makes fixes is followed by another fresh review. |
-| **05 · Verify** | After a clean review, the required project checks run in sequence. A failed check goes back to review and repair. |
+| Simple, non-behavioral edits | Save the baseline, make the edit, run a focused check, inspect the diff. Up to three known files can be edited by the lead. |
+| Unfamiliar code | One scout maps relevant files, contracts, tests, and risks. Known areas use targeted reading. |
+| Complex tasks or planning only | Save a plan with file ownership, interfaces, risks, and checks. |
+| Implementation | One helper at a time; parallel work requires your explicit request and separate files and resources. |
+| Nontrivial changes | An independent reviewer reads the changes; the worker fixes findings. The same reviewer verifies the fix. |
+| Completion | The lead runs required project checks in sequence and reports results, accepted risks, and anything unresolved. |
 
-**A clear finish:** the review cycle requires a round with zero findings and a `ready` verdict. It is capped at six rounds; unfinished checks and open issues are reported explicitly.
+Review is limited to **two started rounds per delta**, including failed launches and reviews after final checks. Fixes do not reset that budget. A clean first review can finish immediately; otherwise the second checks the fixes. Open findings at the limit are reported for escalation. Reviewers never edit project files.
 
-**A record you can inspect:** the plan, decisions, worker reports, and review results are saved outside the repository, separately for each checkout and run. The final handoff lists changes, review rounds, actual check results, and anything still unresolved. Saved state lets the lead continue after context compaction.
+The mode stays active until you cancel it. `ready` closes the current task; it does not start another one or turn the mode off. A later request supplies the next task. Related work keeps its saved context, while a new delta gets its own checks and review budget. Plans, baseline snapshots, decisions, and reports survive context compaction outside the repository.
 
 ## Use
 
-One entry point, two application profiles. Teamlead selects the tools and models of the current Codex or Claude Code session. The bundled workflow instructions are in Russian.
+One entry point, two application profiles. The bundled instructions are in Russian. Run in a Git repository with at least one commit.
 
-Run the workflow in a Git repository with at least one commit: the profiles use `HEAD` to record the baseline.
-
-**Codex:** select **Astra / Ultra** in the main session, then send:
+**Codex:** select **Astra / Ultra**, then send:
 
 ```text
 $teamlead Add search filters and verify the result
 ```
 
-**Claude Code:** select **Fable 5.1 / max** in the main session, then send:
+**Claude Code:** select **Fable 5.1 / max**, then send:
 
 ```text
 /teamlead Add search filters and verify the result
 ```
 
-To start a new terminal session with this model and effort:
+To start a Claude Code session with that lead:
 
 ```sh
 claude --model claude-fable-5-1 --effort max
 ```
 
-To stop after planning, append the supported phrase `только план`.
+Append `только план` or `plan only` to stop after planning. A later “implement it” continues the plan. Tell the assistant to stop Teamlead mode when finished.
 
 ### Codex models
 
 | Role | Model | Effort |
 | --- | --- | --- |
 | Lead: planning and decisions | `gpt-6-astra` | `ultra` |
-| Main implementation | `gpt-5.6-terra` | `high` |
-| Independent review | `gpt-5.6-sol` | `high` |
-| Narrow searches and simple edits | `gpt-5.6-luna` | `medium` |
-| Money, authorization, complex migrations, concurrency | `gpt-5.6-sol` | `xhigh` |
+| Narrow searches and mechanical edits | `gpt-6-luna` | `medium` |
+| Scouting unfamiliar code; implementation | `gpt-6.1-sol` | `high` |
+| Independent review | `gpt-6.1-sol` | `high` |
+| Money, authorization, complex migrations, concurrency: implementation and review | `gpt-6.1-sol` | `xhigh` |
+| Escalation of an individual blocked subtask | `gpt-6-astra` | `ultra` |
 
-Requires a Codex environment with `collaboration` tools and per-agent model/effort selection. The skill does not change the main session's model. See the [Codex profile](skills/teamlead/references/codex/workflow.md) for the full rules.
+Requires `collaboration` with per-agent model/effort selection. New agents use `fork_turns: "none"` and explicit settings; related work resumes the appropriate agent. Availability depends on your account and runtime. The skill does not switch the main session or silently substitute models. Sources: [Codex models](https://learn.chatgpt.com/docs/models), [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol). Full rules: [Codex profile](skills/teamlead/references/codex/workflow.md).
 
 ### Claude Code models
 
-Requires **Claude Code 2.1.267+**, **Dynamic workflows enabled**, access to **Fable 5.1**, and provider support for the requested Fable and Opus effort levels, including Opus `xhigh`. On Pro, you may need to enable Dynamic workflows in `/config` yourself. See the official [workflow documentation](https://code.claude.com/docs/en/workflows).
+Requires **Claude Code 2.1.292+**, native `Agent` and `SendMessage`, and access to the requested models and effort levels. Per-invocation effort is supported from that version; see [Claude Code subagents](https://code.claude.com/docs/en/sub-agents).
 
 | Role | Model | Effort |
 | --- | --- | --- |
-| Lead: planning and decisions | `claude-fable-5-1` | `max` |
-| Narrow searches and simple edits | `opus` | `medium` |
-| Scouting unfamiliar code | `opus` | `high` |
-| Main implementation | `opus` | `high` |
-| Independent review and fixes | `opus` | `high` |
-| Money, authorization, complex migrations, concurrency — implementation and review | `opus` | `xhigh` |
-| Running already specified check commands | `opus` | `low` |
-| Escalation of an individual subtask | `claude-fable-5-1` | `max` |
+| Lead: planning and decisions | Fable 5.1 (`claude-fable-5-1`) | `max` |
+| Narrow searches and mechanical edits | `haiku` — Haiku 5.5 | `high` |
+| Scouting; implementation to a specification; small, low-risk reviews | `sonnet` — Sonnet 5.5 | `high` |
+| Implementation with design choices; high-risk work; shared or central logic reviews | `opus` — Opus 5.5 | `high` |
+| Escalation after Opus cannot resolve a clarified subtask | `fable` — Fable 5.1 | `high` |
 
-Set the lead's model and effort yourself. The skill does not switch the main session or edit settings. Every subagent runs through native `Workflow`, with an explicit `agent(prompt, { model, effort })` call using its role's settings. If `Workflow` is unavailable, the profile stops before scouting and reports the missing requirement; it does not fall back to `Agent` with inherited effort.
+Every helper uses the built-in `general-purpose` type with explicit `model`, `effort: "high"`, and `run_in_background: false`. No custom agent definitions or Dynamic workflows are required. The same reviewer checks worker fixes through `SendMessage`. The lead runs already specified check commands directly.
 
-These are requested effort levels. Model and provider limits, runtime caps, and environment overrides can constrain them. The profile reports unavailable levels or overrides instead of claiming the requested setting took effect. See [Claude Code effort levels](https://code.claude.com/docs/en/model-config#adjust-effort-level).
+Aliases follow the current model generation; the versions above were checked on **2026-10-12** against [Anthropic's model catalog](https://platform.claude.com/docs/en/models/overview). Provider limits and environment overrides can affect settings. Requested settings are reported separately from runtime-confirmed settings. Full rules: [Claude Code profile](skills/teamlead/references/claude/workflow.md).
 
-The [agent workflow template](skills/teamlead/references/claude/agents-workflow.md) handles scouting, implementation, and check runners. The [review workflow template](skills/teamlead/references/claude/review-workflow.md) runs one fresh reviewer per Workflow dispatch with the required effort. The lead reads the report and refreshes the Git state before starting another round; the total limit is six rounds. Both templates ship with the same skill; no separate agent registration or installer is needed. Full rules: [Claude Code profile](skills/teamlead/references/claude/workflow.md).
-
-Start a new Claude Code session after installation. Codex detects skill changes automatically; restart the app if the skill does not appear. Invocation remains explicit in both environments.
+Start a new Claude Code session after installation. Reload the Codex session if it still shows the previous skill. Invocation is explicit in both environments; once invoked, the mode lasts until canceled.
 
 ## Updates and older versions
 
-Repeat the install command and choose the applications and scope. Back up local edits first: the CLI replaces an existing `teamlead` installation, including the original Claude version with that name.
+Repeat the install command and choose the applications and scope. Back up local edits first: installation replaces the existing `teamlead` files. Version 1.1 removes the old Workflow templates; reinstall the whole skill so stale references are not retained. Existing custom Claude agents are not changed or required.
 
-Older `teamlead-codex` and `teamlead-claude` installations are not removed automatically. The shared invocation is now `$teamlead` in Codex and `/teamlead` in Claude Code.
+Older `teamlead-codex` and `teamlead-claude` installations are not removed automatically. The shared commands are `$teamlead` and `/teamlead`. Release details: [changelog](CHANGELOG.md).
 
 ## Repository layout
 
@@ -167,15 +162,10 @@ skills/teamlead/
     claude/
       workflow.md
       briefs.md
-      agents-workflow.md
-      review-workflow.md
 ```
 
-Supporting paths are resolved from the current installation, so the profiles work with both Global and Project. Reports live outside projects, in a separate directory for each checkout and run: `${CODEX_HOME:-$HOME/.codex}/teamlead/` for Codex and `~/.claude/teamlead/` for Claude Code.
+Supporting paths resolve from the installation, including project installs and symlinks. Reports live outside the project, under `${CODEX_HOME:-$HOME/.codex}/teamlead/` or `~/.claude/teamlead/`, separated by checkout and task.
 
-<details>
-<summary><strong>Verify the workflow templates</strong></summary>
+## Verification
 
-From a clone of this repository, run `node --test tests/*.test.mjs`. The tests execute the bundled JavaScript templates with simulated agent responses to check routing, permissions, failures, and review limits. They do not call live models or change installed skills.
-
-</details>
+Run `node --test tests/*.test.mjs` in a clone. Tests check the portable skill bundle, internal references, invocation examples, and release version. They do not execute live Codex or Claude agents. The old simulated Workflow tests were removed with the unused templates.

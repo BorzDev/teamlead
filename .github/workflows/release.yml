@@ -1,0 +1,41 @@
+name: Release skill
+on:
+  push:
+    branches: [main]
+    paths:
+      - skills/teamlead/**
+      - tests/**
+      - CHANGELOG.md
+      - .github/workflows/release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-skill
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - run: node --test tests/*.test.mjs
+      - name: Package and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          release_version=$(sed -n 's/^  version: "\([0-9]*\.[0-9]*\.[0-9]*\)"$/\1/p' skills/teamlead/SKILL.md)
+          test -n "$release_version"
+          release_tag="v$release_version"
+          if gh release view "$release_tag" > /dev/null 2>&1; then
+            exit 0
+          fi
+          git archive --format=zip --prefix=teamlead/ HEAD:skills/teamlead > teamlead.skill
+          gh release create "$release_tag" teamlead.skill --target "$GITHUB_SHA" --title "Teamlead $release_tag" --notes-file CHANGELOG.md
