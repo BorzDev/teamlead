@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="skills/teamlead/references/codex/workflow.md"><img src="https://img.shields.io/badge/Codex-Astra-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Codex: Astra"></a>
+  <a href="skills/teamlead/references/codex/workflow.md"><img src="https://img.shields.io/badge/Codex-Sol%206.2-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Codex: Sol 6.2"></a>
   <a href="skills/teamlead/references/claude/workflow.md"><img src="https://img.shields.io/badge/Claude%20Code-Fable%205.1-82DCC3?style=flat-square&amp;labelColor=17232D" alt="Claude Code: Fable 5.1"></a>
   <a href="#install"><img src="https://img.shields.io/badge/install-npx-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Install with npx"></a>
 </p>
@@ -29,7 +29,7 @@
 
 ---
 
-Give Teamlead a task. It delegates scoped work, uses independent review when the risk calls for it, and reports what actually passed. Version **1.1.0** brings the same persistent workflow to Codex and Claude Code with updated model routing.
+Give Teamlead a task. It delegates scoped work, uses independent review when the risk calls for it, and reports what actually passed. Version **1.2.0** updates Codex model routing to GPT-6.2 Sol and Astra, with GPT-6.1 Terra for bounded work and GPT-6 Luna for narrow tasks.
 
 ## Install
 
@@ -91,7 +91,7 @@ The mode stays active until you cancel it. `ready` closes the current task; it d
 
 One entry point, two application profiles. The bundled instructions are in Russian. Run in a Git repository with at least one commit.
 
-**Codex:** select **Astra / Ultra**, then send:
+**Codex:** select **GPT-6.2 Sol / High**, then send:
 
 ```text
 $teamlead Add search filters and verify the result
@@ -115,14 +115,16 @@ Append `только план` or `plan only` to stop after planning. A later �
 
 | Role | Model | Effort |
 | --- | --- | --- |
-| Lead: planning and decisions | `gpt-6-astra` | `ultra` |
+| Lead: planning and decisions | `gpt-6.2-sol` | `high`; `xhigh` for complex architecture or substantial uncertainty |
 | Narrow searches and mechanical edits | `gpt-6-luna` | `medium` |
-| Scouting unfamiliar code; implementation | `gpt-6.1-sol` | `high` |
-| Independent review | `gpt-6.1-sol` | `high` |
-| Money, authorization, complex migrations, concurrency: implementation and review | `gpt-6.1-sol` | `xhigh` |
-| Escalation of an individual blocked subtask | `gpt-6-astra` | `ultra` |
+| Scouting a bounded area; low-risk implementation to a precise specification | `gpt-6.1-terra` | `medium` |
+| Independent review of a small, low-risk change | `gpt-6.1-terra` | `high` |
+| Complex decisions, connected modules, central logic review | `gpt-6.2-sol` | `high` |
+| Money, authorization, migrations, concurrency: implementation and review | `gpt-6.2-sol` | `xhigh` |
+| A clarified block unresolved by Sol / xhigh | `gpt-6.2-sol` | `max` |
+| The same block after Sol / max fails | `gpt-6.2-astra` | `ultra` |
 
-Requires `collaboration` with per-agent model/effort selection. New agents use `fork_turns: "none"` and explicit settings; related work resumes the appropriate agent. Availability depends on your account and runtime. The skill does not switch the main session or silently substitute models. Sources: [Codex models](https://learn.chatgpt.com/docs/models), [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol). Full rules: [Codex profile](skills/teamlead/references/codex/workflow.md).
+Requires `collaboration` with per-agent model/effort selection. New agents use `fork_turns: "none"` and explicit settings; related work resumes the appropriate agent. Availability depends on your account and runtime. The skill does not switch the main session or silently substitute models. Sources: [Codex models](https://learn.chatgpt.com/docs/models), [GPT-6.2 Sol](https://developers.openai.com/api/docs/models/gpt-6.2-sol). Full rules: [Codex profile](skills/teamlead/references/codex/workflow.md).
 
 ### Claude Code models
 

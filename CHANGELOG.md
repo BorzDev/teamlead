@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0 — 2026-11-22
+
+- Update the Codex lead to GPT-6.2 Sol / high, with xhigh for complex architecture or substantial uncertainty.
+- Use GPT-6.1 Terra / medium for bounded scouting and precise low-risk implementation, and Terra / high for small low-risk reviews. GPT-6 Luna / medium handles narrow tasks.
+- Route complex work and central reviews to GPT-6.2 Sol / high, and sensitive work to Sol / xhigh. Escalate unresolved blocks to Sol / max, then GPT-6.2 Astra / ultra.
+- Update model tables, dispatch examples, and both installation guides. Preserve the published workflow, permission boundaries, and Claude Code profile.
+
+Models were checked against the [Codex catalog](https://learn.chatgpt.com/docs/models) and the available runtime on 2026-11-22. Reinstall with `npx skills add BorzDev/teamlead`; back up local customizations first. This release updates model routing and does not benchmark model performance.
+
 ## 1.1.0 — 2026-10-12
 
 - Update Codex routing: Astra / ultra leads; GPT-6.1 Sol / high implements and reviews; Sol / xhigh handles sensitive work; GPT-6 Luna / medium handles narrow tasks.

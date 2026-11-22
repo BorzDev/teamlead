@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="skills/teamlead/references/codex/workflow.md"><img src="https://img.shields.io/badge/Codex-Astra-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Codex: Astra"></a>
+  <a href="skills/teamlead/references/codex/workflow.md"><img src="https://img.shields.io/badge/Codex-Sol%206.2-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Codex: Sol 6.2"></a>
   <a href="skills/teamlead/references/claude/workflow.md"><img src="https://img.shields.io/badge/Claude%20Code-Fable%205.1-82DCC3?style=flat-square&amp;labelColor=17232D" alt="Claude Code: Fable 5.1"></a>
   <a href="#установка"><img src="https://img.shields.io/badge/install-npx-53F7C9?style=flat-square&amp;labelColor=17232D" alt="Install with npx"></a>
 </p>
@@ -29,7 +29,7 @@
 
 ---
 
-Дайте Teamlead задачу. Тимлид распределит работу, назначит независимое ревью по риску и отчитается о фактических проверках. В версии **1.1.0** обе среды получили единый режим до отмены и обновлённый выбор моделей.
+Дайте Teamlead задачу. Тимлид распределит работу, назначит независимое ревью по риску и отчитается о фактических проверках. В версии **1.2.0** обновлены модели Codex: GPT‑6.2 Sol и Astra, GPT‑6.1 Terra для ограниченных задач и GPT‑6 Luna для узких задач.
 
 ## Установка
 
@@ -91,7 +91,7 @@ npx skills add BorzDev/teamlead -a claude-code
 
 Одна точка входа, два профиля среды. Инструкции навыка написаны на русском. Нужен Git-репозиторий хотя бы с одним коммитом.
 
-**Codex:** выберите **Astra / Ultra** и отправьте:
+**Codex:** выберите **GPT-6.2 Sol / High** и отправьте:
 
 ```text
 $teamlead Добавь поиск с фильтрами и проверь результат
@@ -115,14 +115,16 @@ claude --model claude-fable-5-1 --effort max
 
 | Роль | Модель | Effort |
 | --- | --- | --- |
-| Тимлид: планирование и решения | `gpt-6-astra` | `ultra` |
+| Тимлид: планирование и решения | `gpt-6.2-sol` | `high`; `xhigh` для сложной архитектуры или существенной неопределённости |
 | Узкий поиск и механические правки | `gpt-6-luna` | `medium` |
-| Разведка незнакомого кода; реализация | `gpt-6.1-sol` | `high` |
-| Независимое ревью | `gpt-6.1-sol` | `high` |
-| Деньги, права, сложные миграции, конкурентность: реализация и ревью | `gpt-6.1-sol` | `xhigh` |
-| Эскалация отдельной заблокированной подзадачи | `gpt-6-astra` | `ultra` |
+| Разведка ограниченной области; реализация низкого риска по точной спецификации | `gpt-6.1-terra` | `medium` |
+| Независимое ревью небольшой правки низкого риска | `gpt-6.1-terra` | `high` |
+| Сложные решения, связанные модули, ревью центральной логики | `gpt-6.2-sol` | `high` |
+| Деньги, права, миграции, конкурентность: реализация и ревью | `gpt-6.2-sol` | `xhigh` |
+| Уточнённый блок, не решённый Sol / xhigh | `gpt-6.2-sol` | `max` |
+| Тот же блок после неудачи Sol / max | `gpt-6.2-astra` | `ultra` |
 
-Нужны инструменты `collaboration` с выбором модели/effort. Новые агенты запускаются с `fork_turns: "none"` и явными настройками; связанную работу продолжает подходящий агент. Доступность зависит от аккаунта и среды. Навык не переключает основную сессию и не подменяет модели молча. Источники: [модели Codex](https://learn.chatgpt.com/docs/models), [GPT‑6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol). Полные правила: [профиль Codex](skills/teamlead/references/codex/workflow.md).
+Нужны инструменты `collaboration` с выбором модели/effort. Новые агенты запускаются с `fork_turns: "none"` и явными настройками; связанную работу продолжает подходящий агент. Доступность зависит от аккаунта и среды. Навык не переключает основную сессию и не подменяет модели молча. Источники: [модели Codex](https://learn.chatgpt.com/docs/models), [GPT‑6.2 Sol](https://developers.openai.com/api/docs/models/gpt-6.2-sol). Полные правила: [профиль Codex](skills/teamlead/references/codex/workflow.md).
 
 ### Модели Claude Code
 

@@ -70,7 +70,7 @@ test('Published invocation examples parse and specify native model controls', ()
     for (const call of examples) {
       if (profile === 'codex') {
         assert.equal(call.fork_turns, 'none', 'Model overrides require an unforked agent');
-        assert.ok(['gpt-6-luna', 'gpt-6.1-sol', 'gpt-6-astra'].includes(call.model));
+        assert.ok(['gpt-6-luna', 'gpt-6.1-terra', 'gpt-6.2-sol', 'gpt-6.2-astra'].includes(call.model));
         assert.ok(['low', 'medium', 'high', 'xhigh', 'max', 'ultra'].includes(call.reasoning_effort));
         assert.equal(typeof call.message, 'string');
       } else {
